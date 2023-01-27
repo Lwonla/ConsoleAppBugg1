@@ -25,7 +25,7 @@ jobs:
       #     run: cd minSolutionMedTester
       
     - name: Test
-      run: dotnet test --nobuild --verbosity normal --logger "trx;LogFileName= testresults.trx
+      run: dotnet test --nobuild --verbosity normal --logger "trx;LogFileName= testresults.trx"
     - name: logging show
       run: ls -la
       
