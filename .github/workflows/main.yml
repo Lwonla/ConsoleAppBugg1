@@ -20,9 +20,29 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+      
+      #    - name: Navigate tom my TestProject
+      #     run: cd minSolutionMedTester
+      
     - name: Test
       run: dotnet test --nobuild --verbosity normal --logger "trx;LogFileName= testresults.trx
     - name: logging show
       run: ls -la
+      
+    - name: require successful test
+      if: failure()
+      uses: actions/github-script@0.8.0
+      with:
+        script: |
+          const context = GitHub.context;
+          const pullRequest = context.payload.pull_request;
+          const message = 'Tests did not pass, please fix the issues and try again.'
+          const labels = ['tests failed']
+          const params = = context.issue({
+            state: 'open',
+            labels: labels,
+            body: message
+            });
+            await GitHub.issues.create(pramas);
       
     
